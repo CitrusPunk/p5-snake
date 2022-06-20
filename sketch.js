@@ -87,8 +87,8 @@ function drawGrid() {
 }
 
 function updateScore(score) {
-  let points = "0000";
-  points += score;
-  points = points.substring(points.length - 4);
-  document.getElementById("points").innerHTML = points;
+  let scores = "0000";
+  scores += score;
+  scores = scores.substring(scores.length - 4);
+  document.getElementById("scores").innerHTML = scores;
 }
