@@ -1,16 +1,33 @@
-const amountFieldsByWidth = 25;
-let size, meal, snake, dead, pause, widthWindow, heightWindow,mealColor,
-snakeColor, backgroundColor;
+const amountFields = 32;
+let size,
+  meal,
+  snake,
+  dead,
+  pause,
+  widthWindow,
+  heightWindow,
+  mealColor,
+  snakeColor,
+  backgroundColor,
+  cols,
+  rows,
+  offsetX,
+  offsetY;
 
 let main = document.getElementById("hud");
 
 function setup() {
-  mealColor = color('#4084BF');
-  snakeColor = color('#BF4084');
-  backgroundColor = color('#EEF1EF');
+  mealColor = color("#4084BF");
+  snakeColor = color("#BF4084");
+  backgroundColor = color("#EEF1EF");
   pause = false;
   widthWindow = main.offsetWidth;
   heightWindow = main.offsetHeight;
+
+  cols = floor(widthWindow / size);
+  rows = floor(heightWindow / size);
+  offsetX = (widthWindow % size) / 2;
+  offsetY = (heightWindow % size) / 2;
   // setup canvas and drawing modes
   createCanvas(widthWindow, heightWindow);
   ellipseMode(CENTER);
@@ -24,9 +41,9 @@ function setup() {
 function init() {
   // initialize variables and objects
   dead = false;
-  size = widthWindow / amountFieldsByWidth; // 'amountFieldsByWidth' fields fitting the windows widthWindow
+  size = max(widthWindow, heightWindow) / amountFields; // 'amountFields' fields fitting the windows larger side
   meal = new Meal(mealColor, size);
-  snake = new Snake(snakeColor, 5, size);
+  snake = new Snake(snakeColor, 50, size, amountFields);
   collisionManager = new CollisionManager(meal, snake, {});
 }
 
@@ -34,7 +51,7 @@ function draw() {
   if (!pause) {
     background(backgroundColor);
 
-    // drawGrid();
+    drawGrid();
     meal.draw();
     snake.draw();
 
@@ -43,7 +60,7 @@ function draw() {
 }
 
 function update() {
-  if (frameCount % 3 === 0) {
+  if (frameCount % 5 === 0) {
     snake.update();
 
     ate = collisionManager.didSnakeHitMeal();
@@ -88,13 +105,11 @@ function keyPressed() {
 
 function drawGrid() {
   rectMode(CORNER);
-  const cols = widthWindow / size;
-  const rows = heightWindow / size;
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       noFill();
       stroke(0, 0, 0);
-      rect(x * size, y * size, size, size);
+      rect(offsetX + x * size, offsetY + y * size, size, size);
     }
   }
 }
