@@ -1,9 +1,11 @@
-const amountFieldsByWidth = 25,
-  widthWindow = 1200,
-  heightWindow = 960;
-let size, meal, snake, dead;
+const amountFieldsByWidth = 25;
+let size, meal, snake, dead, pause, widthWindow, heightWindow;
+let main = document.getElementById("hud");
 
 function setup() {
+  pause = false;
+  widthWindow = main.offsetWidth;
+  heightWindow = main.offsetHeight;
   // setup canvas and drawing modes
   createCanvas(widthWindow, heightWindow);
   ellipseMode(CENTER);
@@ -14,17 +16,17 @@ function setup() {
   updateScore(snake.getScore());
 }
 
-function init(){
-    // initialize variables and objects
-    dead = false;
-    size = widthWindow / amountFieldsByWidth; // 'amountFieldsByWidth' fields fitting the windows widthWindow
-    meal = new Meal(30, 110, 250, size);
-    snake = new Snake(230, 110, 20, 5, size);
-    collisionManager = new CollisionManager(meal, snake, {});
+function init() {
+  // initialize variables and objects
+  dead = false;
+  size = widthWindow / amountFieldsByWidth; // 'amountFieldsByWidth' fields fitting the windows widthWindow
+  meal = new Meal(30, 110, 250, size);
+  snake = new Snake(230, 110, 20, 5, size);
+  collisionManager = new CollisionManager(meal, snake, {});
 }
 
 function draw() {
-  if (true) {
+  if (!pause) {
     background(220);
 
     // drawGrid();
@@ -65,10 +67,11 @@ function keyPressed() {
     // ASCII code for 'p'
     console.log(snake.pos);
     console.log(size);
+    pause = !pause;
   }
   if (keyCode === 82) {
     // ASCII code for 'r'
-    console.log('restart');
+    console.log("restart");
     init();
   }
 }
