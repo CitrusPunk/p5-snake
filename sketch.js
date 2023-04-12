@@ -1,8 +1,13 @@
 const amountFieldsByWidth = 25;
-let size, meal, snake, dead, pause, widthWindow, heightWindow;
+let size, meal, snake, dead, pause, widthWindow, heightWindow,mealColor,
+snakeColor, backgroundColor;
+
 let main = document.getElementById("hud");
 
 function setup() {
+  mealColor = color('#4084BF');
+  snakeColor = color('#BF4084');
+  backgroundColor = color('#EEF1EF');
   pause = false;
   widthWindow = main.offsetWidth;
   heightWindow = main.offsetHeight;
@@ -20,14 +25,14 @@ function init() {
   // initialize variables and objects
   dead = false;
   size = widthWindow / amountFieldsByWidth; // 'amountFieldsByWidth' fields fitting the windows widthWindow
-  meal = new Meal(30, 110, 250, size);
-  snake = new Snake(230, 110, 20, 5, size);
+  meal = new Meal(mealColor, size);
+  snake = new Snake(snakeColor, 5, size);
   collisionManager = new CollisionManager(meal, snake, {});
 }
 
 function draw() {
   if (!pause) {
-    background(220);
+    background(backgroundColor);
 
     // drawGrid();
     meal.draw();
@@ -53,26 +58,31 @@ function update() {
 }
 
 function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    snake.setDirection("LEFT");
-  } else if (keyCode === RIGHT_ARROW) {
-    snake.setDirection("RIGHT");
-  } else if (keyCode === UP_ARROW) {
-    snake.setDirection("UP");
-  } else if (keyCode === DOWN_ARROW) {
-    snake.setDirection("DOWN");
-  }
-
-  if (keyCode === 80) {
-    // ASCII code for 'p'
-    console.log(snake.pos);
-    console.log(size);
-    pause = !pause;
-  }
-  if (keyCode === 82) {
-    // ASCII code for 'r'
-    console.log("restart");
-    init();
+  switch (keyCode) {
+    case LEFT_ARROW:
+      snake.setDirection("LEFT");
+      break;
+    case RIGHT_ARROW:
+      snake.setDirection("RIGHT");
+      break;
+    case UP_ARROW:
+      snake.setDirection("UP");
+      break;
+    case DOWN_ARROW:
+      snake.setDirection("DOWN");
+      break;
+    case LEFT_ARROW:
+      snake.setDirection("LEFT");
+      break;
+    case 80: // p
+      console.log(snake.pos);
+      console.log(size);
+      pause = !pause;
+      break;
+    case 82: // r
+      console.log("restart");
+      init();
+      break;
   }
 }
 
