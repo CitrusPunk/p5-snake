@@ -1,8 +1,8 @@
 class Meal {
-  constructor(r = 50, g = 230, b = 90, size = 10) {
-    this.color = color(r, g, b);
-    this.size = size;
-    this.radius = size/2;
+  constructor(c = color(30, 110, 250), s = 10) {
+    this.color = c;
+    this.size = s;
+    this.radius = s/2;
 
     this.relocate();
   }
