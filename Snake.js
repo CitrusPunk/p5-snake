@@ -1,6 +1,6 @@
 class Snake {
-  constructor(r = 230, g = 50, b = 75, startCount = 3, size = 10) {
-    this.color = color(r, g, b);
+  constructor(c = color(230, g = 50, b = 75), startCount = 3, size = 10) {
+    this.color = c;
     this.size = size;
     this.radius = size / 2;
 
